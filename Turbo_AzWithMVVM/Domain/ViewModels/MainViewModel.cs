@@ -3,8 +3,7 @@ using System.Linq;
 using Turbo_AzWithMVVM.Commands;
 using System.Collections.Generic;
 using Turbo_AzWithMVVM.Domain.Entities;
-
-
+using Turbo_AzWithMVVM.Domain.Helper;
 
 namespace Turbo_AzWithMVVM.Domain.ViewModels
 {
@@ -91,7 +90,13 @@ namespace Turbo_AzWithMVVM.Domain.ViewModels
             set { maxkm = value; OnPropertyChanged(); }
         }
 
+        private string imagePath;
 
+        public string ImagePath
+        {
+            get { return imagePath; }
+            set { imagePath = value; OnPropertyChanged(); }
+        }
 
 
         public MainViewModel()
@@ -105,13 +110,21 @@ namespace Turbo_AzWithMVVM.Domain.ViewModels
 
             var cars = App.DB.CarRepository.GetAll().ToList();
 
+
+
+
             foreach (var item in cars)
             {
                 Models.Add(item.Brand);
                 Colors.Add(item.Color);
                 Bans.Add(item.Type);
                 FuelTypes.Add(item.FuelType);
+
+               ImageHelper helper = new ImageHelper();
+              // var path = helper.GetImagePath(item.ImagePath,item.Id);
+              // ImagePath = path;
             }
+
             Models = Models.Distinct().ToList();
             Colors = Colors.Distinct().ToList();
             Bans = Bans.Distinct().ToList();
